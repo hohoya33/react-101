@@ -1,0 +1,37 @@
+@charset "utf-8";
+html,body,div,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,address,big,cite,code,del,dfn,em,font,img,ins,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,ul,ol,li,dl,dt,dd,table,caption,tbody,tfoot,thead,tr,th,td,fieldset,form,label,legend,input,button,textarea,select{margin:0;padding:0}
+body{position:relative;line-height:1.5em;font-size:.75em;font-family:'Apple SD Gothic Neo',AppleGothic,'돋움',Dotum,Tahoma,Verdana,Geneva,Arial,Helvetica,sans-serif}
+header,footer,section,article,aside,nav,hgroup,details,menu,figure,figcaption{display:block;margin:0;padding:0}
+fieldset,img,table,caption,tbody,tfoot,thead,tr,th,td,button,hr{border:0 none}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal}
+blockquote,q{quotes:'none'}
+ins{text-decoration:none}
+del{text-decoration:line-through}
+img{vertical-align:middle}
+a{text-decoration:none}
+.blind{overflow:hidden;position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;line-height:0;white-space:normal;word-wrap:break-word;word-break:break-all;clip:rect(0,0,0,0)}
+.blind:before{display:block;width:0;height:0;font-size:0;content:'\00a0'}
+
+/* 상품유닛 */
+.cunit_thmb_lst{font-size:0;width:1019px;padding:0 0 0 1px;}
+.cunit_thmb_lst > li{display:inline-block;vertical-align:top;padding-top:30px;width:232px;margin-right:30px;padding-bottom:24px}
+.cunit_thmb_lst > li:nth-child(4n+4){margin-right:0}
+
+.cunit_prod{position:relative;width:232px}
+.cunit_prod .prod_top{height:26px;margin-top:-26px}
+
+.cunit_prod .thmb{width:232px;height:232px;overflow:hidden}
+.cunit_prod .thmb > a{display:block;position:relative;width:232px;height:232px;overflow:hidden;cursor:pointer}
+.cunit_prod .thmb img{position: absolute;top:0;left:0;background-color:#fafafa;}
+
+.cunit_info{font-size:12px}
+
+.cunit_md{margin-bottom:5px}
+.cunit_md .title a{color:#222;line-height:17px;display:inline-block;max-height:51px;overflow-y:hidden}
+.cunit_md .title a:hover{text-decoration:underline}
+.cunit_price{position:relative}
+.cunit_price:after{content:'';display:block;clear:both}
+.cunit_price .opt_price{float:left}
+.cunit_price .opt_price .ssg_price{font-size:22px;letter-spacing:-.5px;color:#222;font-weight:600;vertical-align:middle}
+.cunit_price .opt_price .ssg_tx{font-size:11px;color:#222;vertical-align:middle;display:inline-block;margin:1px 0 -1px -1px}
+.cunit_price .opt_price .ssg_tx .cm_tx_opt{padding-left:2px}

@@ -1,0 +1,1144 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>React</title>
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/league.css" id="theme">
+		<!-- <link rel="stylesheet" href="css/theme/ember.css" id="theme"> -->
+		<!-- Code syntax highlighting -->
+		<!-- <link rel="stylesheet" href="lib/css/monokai_sublime.css"> -->
+		<!-- <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/atom-one-dark.css"> -->
+		<!-- <link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/monokai-sublime.css"> -->
+		<!--<link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/monokai.css">       -->
+		<link rel="stylesheet" href="https://highlightjs.org/static/demo/styles/atom-one-dark.css">
+		<link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css">
+		<link rel='stylesheet' href='lib/font/devicons/devicons.css'>
+		<style type="text/css">
+		.reveal{font-size:24px}
+		.txl{text-align:left;display:inline-block}
+		.devicons-javascript{color:#f5de19}
+		.devicons-html5{color:#e44f26}
+		.devicons-css3{color:#1572b6}
+		.devicons-npm{color:#a23332}
+		.devicons-sass{color:#cd6799}
+		</style>
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="reveal">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<div><img src="img/react_logo.png " alt="" style="display:inline-block;margin:0;vertical-align:middle;width:18%;"><h1 style="display:inline-block;vertical-align:middle;margin:10px 0 0 -14px;font-size:60px;letter-spacing:normal">React 101</h1></div>
+					
+					<p>2017. 12. 28.</p>
+					<p>IT 개발2팀 UI파트 - 김재호</p>
+				</section>
+
+				<section>
+					<h2>The Agenda</h2>
+					<ul>
+						<li>React 소개</li>
+						<li>React 설치</li>
+						<li>Component with JSX</li>
+						<li>Props</li>
+						<li>Lists with map</li>
+						<li>Prop Types</li>
+						<li>Component Lifecycle</li>
+						<li>State</li>
+						<li>Smart vs Dumb Components</li>
+						<li>AJAX Promises</li>
+						<li>Async Await</li>
+						<li>Update Items Component</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>React 소개</h2>
+					</section>
+					<section>
+						<h2>React?</h2>
+						<ul>
+							<li>MVC(Model View Controller) 패턴에서 뷰(View) 부분을 컴포넌트로 만들기위한 UI라이브러리</li>
+							<li>Facebook 개발. 현재 Facebook, Instagram, Airbnb 등 여러 곳에서 사용</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>특징</h2>
+						<ul>
+							<li>JSX (JavaScript XML)</li>
+							<li>Virtual DOM</li>
+							<li>단방향 데이터 (Unidirectional Data Flow)</li>
+							<li>서버 사이드 렌더링 (SSR)</li>
+							<li>리액트 네이티브 (React Native)</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>JSX (JavaScript XML)</h2>
+						<ul>
+							<li>여러 element 렌더링 시, 감싸주는 element 필요</li>
+							<li>class가 아니라 className 사용 (class는 자바스크립트 예약어)</li>
+							<li>{ text } 를 사용하여 text 자바스크립트 변수 렌더링</li>
+							<li>if-else문 사용 불가 (삼항연산자 사용)</li>
+							<li>Inline Style</li>
+							<li>주석 { /* comments */ }</li>
+						</ul>
+						<pre><code class="react">
+	render() { 
+		let text = 'Hello';
+		let style = { color: 'red', backgroundColor: 'black' };
+		let loading = true;
+
+		return (
+			&lt;div&gt;
+				&lt;div className="info">{ text }&lt;/div&gt;
+				&lt;div style={ style }>{ loading ? 'Loading' : 'World' }&lt;/div&gt;
+			&lt;/div&gt;
+		);
+	}
+						</code></pre>
+					</section>
+					
+					<section>
+						<p>React v16부터 감싸주는 불필요한 태그 대신 Fragment 사용가능</p>
+						<pre><code class="react">
+	import React, { Component, Fragment } from 'react';
+
+	render() { 
+		return (
+			&lt;Fragment&gt;
+				&lt;div>Hello&lt;/div&gt;
+				&lt;div>World&lt;/div&gt;
+			&lt;/Fragment&gt;
+		);
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>컴포넌트 (Components)</h2>
+						<ul>
+							<li>UI 요소들을 그룹별로 나눠서 작업</li>
+							<li>개발 생산성을 높이고 유지보수가 용이 (재사용성)</li>
+							<li>컴포넌트 네이밍 시, 첫 문자는 대문자로 CamelCase로 작성</li>
+						</ul>
+						<pre><code class="react">
+	import Header from './Header';
+	import Grid from './Grid';
+	import Footer from './Footer';
+	
+	render() { 
+		return (
+			&lt;div className="App"&gt;
+				&lt;Header /&gt;
+				&lt;Grid /&gt;
+				&lt;Footer /&gt;
+			&lt;/div&gt;
+		);
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Virtual DOM</h2>
+						<p>DOM 자체는 빠름. 그러나 브라우저에서 DOM의 변화가 일어나면 리페인트가 발생<br>이 과정에서 느려짐 (CSS를 다시 연산, 레이아웃 구성)</p>
+						<p>DOM 처리 횟수를 최소화, 효율적으로 진행</p>
+						<ul>
+							<li>데이터 변경 시, 전체 UI를 Virtual DOM에 리렌더링</li>
+							<li>이전 Virtual DOM에 있던 내용과 현재의 내용을 비교</li>
+							<li>바뀐 부분만 실제 DOM에 적용</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>단방향 데이터 (Unidirectional Data Flow)</h2>
+						<p>부모 컴포넌트에서 하위 컴포넌트로 전달하는 단방향 데이터 흐름을 갖고 있어<br>데이터 추적과 디버깅이 쉬움</p>
+					</section>
+
+					<section>
+						<h2>서버 사이드 렌더링 (SSR)</h2>
+						<p>SPA에서 문제점 이였던 브라우저 초기 렌더링 딜레이를 줄이고, SEO 호환도 가능</p>
+					</section>
+
+					<section>
+						<h2>리액트 네이티브 (React Native)</h2>
+						<p>리액트를 기반으로 모바일 앱을 만들기 위한 프레임워크 (iOS / Android)</p>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h2>React 설치</h2>
+					</section>
+					<section>
+						<h2>설치</h2>
+						<ul>
+							<li><a href="https://nodejs.org/en/" target="_blank">NodeJS</a></li>
+							<li><a href="https://github.com/facebookincubator/create-react-app" target="_blank">create-react-app</a></li>
+							<li><a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi" target="_blank">react-developer-tools (크롬 확장프로그램)</a></li>
+						</ul>
+						<pre><code class="bash">
+	$ npm install -g create-react-app
+						</code></pre>
+					</section>
+					<section>
+						<h2>프로젝트 생성</h2>
+						<pre><code class="bash">
+	$ create-react-app ssg-app
+	$ cd ssg-app
+	
+	$ npm start (프로젝트 서버 실행)
+	$ npm run build (파일 빌드)
+						</code></pre>
+
+						<p>이제 상품유닛을 만들면서 React를 배워봅시다!</p>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h2>Component with JSX</h2>
+					</section>
+					<section>
+						<h2>ReactDOM</h2>
+						<ul>
+							<li>ReactDOM은 React를 웹사이트에 출력(render)하는 걸 도와주는 모델</li>
+							<li>ReactDOM은 1개의 컴포넌트(App)를 출력</li>
+							<li>Element 아이디는 root, index.html 파일안에 있음</li>
+							<li>render를 하면 모든 컴포넌트들이 여기로 출력</li>
+						</ul>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;index.js</em><code class="react">
+	ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
+						</code></pre>
+					</section>
+
+					<section>
+						<h3>상품 컴포넌트 만들기</h3>
+						<ul>
+							<li>일단 App.js처럼 동일하기 작성 (class Product..)</li>
+							<li>컴포넌트는 항상 render를 해야함</li>
+							<li>export를 작성해서 해당 컴포넌트를 내 보냄</li>
+						</ul>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
+	import React, { Component } from 'react';
+
+	class Product extends Component { 
+		render() { 
+			return (
+				&lt;div&gt;
+					&lt;h1&gt;상품명 상품명 상품명&lt;/h1&gt;
+				&lt;/div&gt;
+			);
+		}
+	} 
+	export default Product;
+						</code></pre>
+					</section>
+					<section>
+						<h2></h2>
+						<ul>
+							<li>App 컴포넌트 안에 Product 컴포넌트를 레고블럭 조립하듯이 사용</li>
+							<li>여러번 불러 올 수도 있음</li>
+						</ul>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	import React, { Component } from 'react';
+	import Product from './Product';
+
+	class App extends Component {
+		render() { 
+			return (
+				&lt;div className="App"&gt;
+					&lt;Product /&gt;
+					&lt;Product /&gt;
+					&lt;Product /&gt;
+				&lt;/div&gt;
+			);
+		}
+	} 
+	export default App;
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>상품 이미지 넣기</h2>
+						<p>클래스명은 ProductImage render > return > 이미지 소스</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
+	class ProductImage extends Component { 
+		render() { 
+			return (
+				&lt;img src="http://item.ssgcdn.com/32/08/58/item/1000024580832_i1_500.jpg" /&gt;
+			);
+		}
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<ul>
+							<li>Product 컴포넌트안에 상품명, 이미지..등 또 다른 작은 컴포넌트로 구성</li>
+							<li>큰 컴포넌트 안에 작은 컴포넌트를 집어넣는 방식으로 작업</li>
+						</ul>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">	
+	class Product extends Component { 
+		render() { 
+			return (
+				&lt;div&gt;
+					&lt;ProductImage /&gt;
+					&lt;h1&gt;상품명 상품명 상품명&lt;/h1&gt;
+				&lt;/div&gt;
+			);
+		}
+	}
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Props</h2>
+					</section>
+					<section>
+						<h2>리액트 두가지 주요 컨셉 (props, state)</h2>
+						<p>첫번째 props는 부모 컴포넌트로부터 전달받는 속성</p>
+					</section>
+
+					<section>
+						<p>부모 컴포넌트(App)는 프로퍼티를 사용해 상품명, 이미지 정보를 자식 컴포넌트(Product)로 각각 전달</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	const itemName = [
+		'[LG]LG전자 트롬 RH9SA, RH9WA 인버터 전기식 건조기 용량9KG',
+		'[일룸(iloom)]사랑받는 이유, 일룸이 제안하는 홈스타일링',
+		'[발뮤다]에어엔진(그레이/ 블랙 로그인시 추가쿠폰지원(일부상품제외)'
+	];
+	const itemImages = [
+		'http://item.ssgcdn.com/16/88/15/item/1000021158816_i1_202.jpg',
+		'http://item.ssgcdn.com/25/08/15/item/1000023150825_i1_202.jpg',
+		'http://item.ssgcdn.com/15/01/48/item/1000017480115_i1_202.jpg'
+	];
+						</code></pre>
+						<pre><code class="react">
+	&lt;Product name={itemName[0]} image={itemImages[0]} /&gt;
+	&lt;Product name={itemName[1]} image={itemImages[1]} /&gt;
+	&lt;Product name={itemName[2]} image={itemImages[2]} /&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<ul>
+							<li>자식 컴포넌트(Product)에서 상품 정보들은 props를 통해 받음</li>
+							<li>JSX의 경우 명령을 실행시키려면 중괄호 { } 사용</li>
+							<li>각 요소들을 액세스하는 방법 { this.props.name }</li>
+						</ul>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
+	class Product extends Component {
+		render() {
+			console.log(this.props);
+			return (
+				&lt;div&gt;
+					&lt;ProductImage image={this.props.image} /&gt;
+					&lt;h1&gt;{this.props.name}&lt;/h1&gt;
+				&lt;/div&gt;
+			);
+		}
+	}
+						</code></pre>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<h2>Lists with map</h2>
+					</section>
+					<section>
+						<h2>JavaScript - map</h2>
+						<p>map() 메소드는 파라미터로 전달 된 함수를 통하여 배열 내의 각 요소를 처리해서<br>그 결과로 새로운 배열을 생성</p>
+						<pre><code class="react">
+	let array = [1, 2, 3, 4, 5];
+	let newArray = array.map(function(currentValue, index, array){
+		return currentValue * 2;
+	});
+	console.log(newArray); //[2, 4, 6, 8, 10]
+						</code></pre>
+						
+						<ul>
+							<li>이전에 만든 리스트는 효율적이지 않음, 계속 복사 붙여넣기 할 수 없음</li>
+							<li>상품데이터를 기반으로 map메소드를 사용해 리스트 제작</li>
+						</ul>
+					</section>
+
+					<section>
+						<p>상품 데이터(itemName, itemImages) 아래 배열로 수정</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	const items = [
+		{
+			name: '[LG]LG전자 트롬 RH9SA, RH9WA 인버터 전기식 건조기 용량9KG',
+			image: 'http://item.ssgcdn.com/16/88/15/item/1000021158816_i1_202.jpg'
+		},
+		{
+			name: '[일룸(iloom)]사랑받는 이유, 일룸이 제안하는 홈스타일링',
+			image: 'http://item.ssgcdn.com/25/08/15/item/1000023150825_i1_202.jpg',
+		},
+		{
+			name: '[발뮤다]에어엔진(그레이/ 블랙 로그인시 추가쿠폰지원(일부상품제외)',
+			image: 'http://item.ssgcdn.com/15/01/48/item/1000017480115_i1_202.jpg'
+		}
+	];
+						</code></pre>
+					</section>
+
+					<section>
+						<p>이제 배열 하나를 잡고 매핑(map)해서 리스트를 만듬</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	class App extends Component {
+		render() {
+			return (
+				&lt;div className="App"&gt;
+					{items.map(item => {
+						return &lt;Product name={item.name} image={item.image} /&gt;
+					})}
+				&lt;/div&gt;
+			);
+		}
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>list key</h2>
+						<p>각 리스트 아이템에 고유한 키값을 넣어 실제 DOM과 가상 DOM을 비교<br>빠른 방법으로 적적한 레코드를 업데이트</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	&lt;div className="App"&gt;
+		{items.map((item, index) => {
+			return &lt;Product name={item.name} image={item.image} key={index} /&gt;
+		})}
+	&lt;/div&gt;
+						</code></pre>
+					</section>
+				</section>
+
+
+
+				<section>
+					<section>
+						<h2>Prop Types</h2>
+					</section>
+
+					<section>
+						<h2>React prop-types</h2>
+						<ul>
+							<li>props은 외부로부터 값을 지정받기 때문에 데이터 타입이 무엇인지 검증 필요</li>
+							<li>propTypes은 props에 대한 유효성 검사 실행</li>
+							<li>prop-types 패키지 설치</li>
+						</ul>
+
+						<pre><code class="bash">
+	$ npm install --save prop-types
+						</code></pre>
+					</section>
+
+					<section>
+						<ul>
+							<li>image에 숫자나, true / false 같은 원하지 않는 값이 들어올 때 (에러발생)</li>
+							<li>isRequired 필수조건, name 속성은 반드시 필요</li>
+							<li>string, number, isRequired..등 <a href="https://reactjs.org/docs/typechecking-with-proptypes.html" target="_blank">(propTypes 더보기)</a></li>
+							<li>props가 전달되는 컴포넌트는 다 작성하는게 좋음</li>
+						</ul>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
+	import PropTypes from 'prop-types';
+
+	class Product extends Component {
+		static propTypes = {
+			name: PropTypes.string.isRequired,
+			image: PropTypes.string
+		}
+		//...
+	}
+						</code></pre>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2>Component Lifecycle</h2>
+					</section>
+
+					<section>
+						<h2>리액트 라이프사이클?</h2>
+						<p>컴포넌트가 생성되거나 업데이트, 제거될 때, 특정한 순서대로 이벤트가 실행</p>
+					</section>
+
+					<section>
+						<h2>컴포넌트 생성</h2>
+						<p>constructor() -> componentWillMount() -> render() -> componentDidMount()</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	class App extends Component {
+		constructor(props) {
+			super(props);
+			//1. 생성자 메소드, 컴포넌트가 처음 만들어 질 때 실행 (state 정의)
+		}
+		componentWillMount() { 
+			//2. 컴포넌트가 DOM 위에 만들어지기 전에 실행
+		}
+		componentDidMount() {
+			//3. 컴포넌트가 만들어지고 첫 렌더링을 다 마친 후 실행
+			//프레임워크를 연동, setTomeout, setInterval, Ajax 요청
+		}
+		render() {
+			//4. 컴포넌트 렌더링
+		}
+	}
+						</code></pre>
+
+					</section>
+
+					
+					<section>
+						<h2>컴포넌트 업데이트</h2>
+						<p>componentWillReceiveProps() -> shouldComponetUpdate() -> componentWillUpdate() -> render() -> componentDidUpdate()</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	class App extends Component {
+		componentWillReceiveProps() {
+			//1. 컴포넌트가 prop을 새로 받았을 때 실행
+		}
+		shouldComponetUpdate() {
+			//2. prop, state가 변경 되었을 때, 업데이트 여부를 결정하기 위해 실행
+		}
+		componentWillUpdate() { 
+			//3. 컴포넌트가 업데이트 되기 전에 실행
+		}
+		componentDidUpdate() { 
+			//5. 컴포넌트가 업데이트를 마친 후 실행
+		}
+		render() { 
+			//4. 컴포넌트 렌더링
+		}
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>컴포넌트 제거</h2>
+						<p>componentWillUnmount()</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	class App extends Component {
+		componentWillUnmount() {
+			//컴포넌트를 사용하지 않을 때, DOM에서 사라진 후 실행
+		}
+	}
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>State</h2>
+					</section>
+
+					<section>
+						<h2>props, state의 차이</h2>
+						<ul>
+							<li>props: 상위 컴포넌트에서 값을 지정받기 때문에 하위 컴포넌트에서 수정불가</li>
+							<li>state: 컴포넌트 내부에서 자기 자신의 상태를 제어하기 위해 수정가능</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>state 사용방법</h2>
+						<p>컴포넌트가 마운트되면 5초 후 greeting을 업데이트 하도록 코드작성</p>
+						
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	class App extends Component {
+		state = {
+			greeting: 'Hello'
+		}
+
+		render() {
+			return (
+				&lt;div className="App"&gt;
+					{this.state.greeting}
+				&lt;/div&gt;
+			);
+		}
+	}
+						</code></pre>
+					</section>
+
+
+					<section>
+						<h2>setState</h2>
+						<ul>
+							<li>state를 직접 변경하면 안됨 (경고표시)</li>
+							<li>setState를 사용해 갱신</li>
+							<li>setState가 호출 될 때마다 rende() 발생</li>
+						</ul>
+						
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+		componentDidMount() {
+			setTimeout(() => {
+				this.state.greeting = 'Hello again!'; (X)
+
+				this.setState({
+					greeting: 'Hello again!'
+				});
+			}, 5000)
+		}
+						</code></pre>
+					</section>
+
+					<section>
+						<p>이제 컴포넌트 외부에 있는 상품 데이터(items)를 컴포넌트 state 안으로 옮겨보자!</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	state = {
+		items: [
+			{
+				name: '[LG]LG전자 트롬 RH9SA, RH9WA 인버터 전기식 건조기 용량9KG',
+				image: 'http://item.ssgcdn.com/16/88/15/item/1000021158816_i1_202.jpg'
+			},
+			{
+				name: '[일룸(iloom)]사랑받는 이유, 일룸이 제안하는 홈스타일링',
+				image: 'http://item.ssgcdn.com/25/08/15/item/1000023150825_i1_202.jpg',
+			},
+			{
+				name: '[발뮤다]에어엔진(그레이/ 블랙 로그인시 추가쿠폰지원(일부상품제외)',
+				image: 'http://item.ssgcdn.com/15/01/48/item/1000017480115_i1_202.jpg'
+			}
+		]
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<p>items을 this.state.items으로 수정</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	render() {
+		return (
+			&lt;div className="App"&gt;
+				{this.state.items.map((item, index) => {
+					return &lt;Product name={item.name} image={item.image} key={index} /&gt;
+				})}
+			&lt;/div&gt;
+		);
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<p>상품 리스트에서 상품을 하나 더 추가 하고 싶으면?<br>이전 상품리스트를 그대로 두고 한 개의 상품을 추가</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	componentDidMount() {
+		setTimeout(() => {
+			this.setState({
+				items: [
+					...this.state.items,
+					{
+						name: '[입생로랑(YSL)]2017 홀리데이 컴플리트 메이크업 팔레트',
+						image: 'http://item.ssgcdn.com/27/52/13/item/1000024135227_i1_202.jpg'
+					}
+				]
+			});
+		}, 1000);
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<p>...this.state.items 새로 추가하는 상품 다음에 입력하면 상단부터 새로운 상품이 출력</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	this.setState({
+		items: [
+			{
+				name: '[입생로랑(YSL)]2017 홀리데이 컴플리트 메이크업 팔레트',
+				image: 'http://item.ssgcdn.com/27/52/13/item/1000024135227_i1_202.jpg'
+			},
+			...this.state.items
+		]
+	});
+						</code></pre>
+					</section>
+
+					<section>
+						<p>데이터 없이 컴포넌트 로딩 -> 상품 데이터 Ajax Call -> 데이터를 받아서 state를 업데이트</p>
+						<p>setTimeout 기능으로 유사하게 구현</p>
+					</section>
+
+					<section>
+						<p>상품 데이터(state items)를 setTimeout 함수로 이동</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	setTimeout(() => {
+		this.setState({
+			items: [
+				{
+					name: '[LG]LG전자 트롬 RH9SA, RH9WA 인버터 전기식 건조기 용량9KG',
+					image: 'http://item.ssgcdn.com/16/88/15/item/1000021158816_i1_202.jpg'
+				},
+				{
+					name: '[일룸(iloom)]사랑받는 이유, 일룸이 제안하는 홈스타일링',
+					image: 'http://item.ssgcdn.com/25/08/15/item/1000023150825_i1_202.jpg',
+				}
+				//...
+			]
+		});
+	}, 1000);
+						</code></pre>
+					</section>
+
+
+					<section>
+						<h2>Loading States</h2>
+						<p>에러: Cannot read property 'map' of undefined</p>
+						<p>this.state.items에 상품이 없으면 로딩을 출력</p>
+					</section>
+
+
+					<section>
+						<p>상품 리스트를 불러오는 새로운 함수(_renderItems)를 만들고 items 변수에 데이터를 저장</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	_renderItems = () => {
+		const items = this.state.items.map((item, index) => {
+			return &lt;Product name={item.name} image={item.image} key={index} /&gt;
+		});
+		return items;
+	}
+						</code></pre>
+
+						<p>this.state.items에 데이터가 있으면 _renderItems(), 데이터가 없으면 로딩 출력</p>
+						<pre><code class="react">
+	render() {
+		return (
+			&lt;div className="App"&gt;
+				{this.state.items ? this._renderItems() : 'Loading'}
+			&lt;/div&gt;
+		);
+	}
+						</code></pre>
+					</section>
+
+				</section>
+
+
+				<section>
+					<section>
+						<h2>Smart vs Dumb Components</h2>
+					</section>
+
+					<section>
+						<h3>클래스기반 컴포넌트 (smart component)</h3>
+						<ul>
+							<li>state, 라이프사이클 개념을 사용할 때</li>
+							<li>functional 컴포넌트들을 관리</li>
+							<li>ex) 사용자가 입력창에 타이핑을 할 때, 타이핑 하는 내용이 필요할 때</li>
+						</ul>
+	
+						<h3 style="margin-top:50px">함수형 컴포넌트 (dumb component)</h3>
+						<ul>
+							<li>오직 props로 전달받은 값을 DOM 렌더링만 해주는 역할</li>
+							<li>state, 라이프사이클를 갖고 있지 않음</li>
+						</ul>
+					</section>
+
+
+					<section>
+						<h2>ProductImage 컴포넌트</h2>
+						<p>state가 없고 props밖에 없을 때 class 컴포넌트 대신 functional 컴포넌트로 변경<br>functional 컴포넌트에서는 this.props를 삭제, 이전 보다 적은 양의 코드로 작성</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
+	//es6 비구조화 할당(destructuring assignment) 구문
+	//const image = props.image; 이렇게 쓰는것과 같은 방식
+	function ProductImage({image}) {
+		return (
+			&lt;img src={image} alt="상품이미지" /&gt;
+		)
+	}
+
+	//propTypes 확인
+	ProductImage.propTypes = {
+		image: PropTypes.string.isRequired
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Product 컴포넌트</h2>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
+	function Product({name, image}) {
+		return (
+			&lt;div&gt;
+				&lt;ProductImage image={image} /&gt;
+				&lt;h1&gt;{name}&lt;/h1&gt;
+			&lt;/div&gt;
+		)
+	}
+
+	Product.propTypes = {
+		name: PropTypes.string.isRequired,
+		image: PropTypes.string.isRequired
+	}
+						</code></pre>
+					</section>	
+				</section>
+
+
+				<section>
+					<section>
+						<h2>AJAX Promises</h2>
+					</section>
+
+					<section>
+						<h2>React에서 Ajax 요청</h2>
+						<p>이전에 작업한 setTimeout을 삭제하고 대신에 ajax로 상품 데이터를 받아서 처리</p>
+
+						<ul>
+							<li>ajax 작업 시, 많은 개발자들이 jQuery 사용. 이제 더 이상 jQuery는 필요없음</li>
+							<li>ajax 기능만 필요 (fetch, axios..)</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>fetch</h2>
+						<p>fetch는 모던 웹브라우저에 내장되어있는 기능</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	componentDidMount() {
+		const url = 'https://event.ssg.com/event/getLeafItemIdsItemList.ssg?itemIds=1000021158816,1000023150825,1000017480115,1000024135227,2097000201672,1000022797673';
+
+		console.log(fetch(url)) //Promise {[[PromiseStatus]]: "pending", [[PromiseValue]]: undefined}
+
+		fetch(url)
+		.then(response => response.json()) //비동기작업 완료 시
+		.then(json => console.log(json))
+		.catch(err => console.log(err)) //비동기작업 중간에 에러 발생 시
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>fetch-jsonp 설치</h2>
+						<h3>jsonp란?</h3>
+						<p>웹 브라우져에서는 same-origin policy(SOP) 정책에 따라 다른 도메인간의 request을 제한<br>그러나 &lt;script/&gt; 태그는 SOP정책에 속하지 않는다는 사실을 근거로<br>서로 다른 도메인간의 javascript 호출을 위하여 jsonp 사용</p>
+
+						<pre><code class="bash">
+	$ npm install fetch-jsonp --save
+						</code></pre>
+					</section>
+
+					<section>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	import fetchJsonp from 'fetch-jsonp';
+
+	componentDidMount() {
+		const url = 'https://event.ssg.com/event/getLeafItemIdsItemList.ssg?itemIds=1000021158816,1000023150825,1000017480115,1000024135227,2097000201672,1000022797673';
+
+		fetchJsonp(url, {
+			jsonpCallback: 'callBack'
+		})
+		.then(response => response.json())
+		.then(data => {
+			console.log(data.resultMsg);
+		})
+		.catch(error => {
+			console.log('Error fetching and parsing data', error);
+		});
+	}
+						</code></pre>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<h2>Async Await</h2>
+					</section>
+
+					<section>
+						<h2>동기, 비동기</h2>
+						<ul>
+							<li>동기: 명령을 순서대로 차례차례 끝내고 넘어감</li>
+							<li>비동기: 특정 명령이 실행된 후 그 명령이 끝나기 전에 다음 명령이 실행</li>
+						</ul>
+						<p>서버에 request 요청 후 response를 받는 속도는 명령 실행 속도보다는 훨씬 느림<br>이걸 원래 순서대로 코딩하게 되면 문제 발생<br>따라서 동기적으로 동작하길 원한다면 callback을 잘 이용</p>
+					</section>
+
+					<section>
+						<h2>callback hell</h2>
+						<p>한 곳에 코드를 몰아서 작성하는 것보다 작은 함수로 기능을 나누는 것이 좋음</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	componentDidMount() {
+		fetchJsonp(url, {
+			jsonpCallback: 'callBack'
+		})
+		.then(response => response.json())
+		.then(data => {
+			this.setState({
+				items: data.resultMsg
+			}, () => {
+				if(true) {
+				//코드가 커지면 함수 안에 함수로 이어지면서 callback hell에 빠짐
+				}
+			});
+		})
+		.catch(error => {
+			console.log('Error fetching and parsing data', error);
+		});
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<p>_callApi, _getItems 새로운 함수에 코드를 분리</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	componentDidMount() {
+		this._getItems();
+	}
+	_callApi = () => {
+
+	}
+	_getItems = () => {
+
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>async await 사용방법</h2>
+						<p>ES2017에 새로 추가된 기능. 비동기 작업을 동기식으로 표현, callback hell을 해결하는 방법</p>
+						<p>async await: 비동기 연산이 끝나길 '기다렸다가' 진행</p>
+						<pre><code class="react">
+	function callApi() {
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+				resolve('비동기 작업 완료!');
+			}, 3000);
+		});
+	}
+	
+	async function getItems() {
+		const itemValue = await callApi();
+		console.log(itemValue);
+		console.log('끝');
+	}
+	getItems();
+	//비동기 작업 완료!
+	//끝
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>_callApi()</h2>
+						<p>데이터 요청 후 받은 데이터 결과를 return하도록 수정</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	_callApi = () => {
+		const url = 'https://event.ssg.com/event/getLeafItemIdsItemList.ssg?itemIds=1000021158816,1000023150825,1000017480115,1000024135227,2097000201672,1000022797673';
+
+		return fetchJsonp(url, {
+			jsonpCallback: 'callBack'
+		})
+		.then(response => response.json())
+		.then(data => data.resultMsg)
+		.catch(error => {
+			console.log('Error fetching and parsing data', error);
+		});
+	}
+						</code></pre>
+					</section>
+
+
+					<section>
+						<h2>_getItems()</h2>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+	_getItems = async() => {
+		const items = await this._callApi(); //성공, 실패 상관없이 작업이 완료 될 때까지 기다림
+
+		//this.setState는 _callApi작업이 끝 날 때까지 실행되지 않음
+		this.setState({
+			items //items: items (es6)
+		});
+		//그리고 state.items을 받은 데이터 items로 세팅
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>_renderItems()</h2>
+						<p>콘솔로 데이터 확인 후 item 오브젝트 변경<br>상품명 itemNm, 이미지 imgPath<br>key는 index 대신 itemId 사용</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+    //before
+    &lt;Product name={item.name} image={item.image} key={index} /&gt; 
+
+    //after
+    &lt;Product name={item.itemNm} image={item.imgPath} key={item.itemId} /&gt;
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Update Items Component</h2>
+					</section>
+
+					<section>
+						<h2>_renderItems()</h2>
+						<p>상품이미지, 상품명, 가격, 품절, 링크, 브랜드.. 등 데이터 확인 후 추가</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
+  _renderItems = () => {
+	const items = this.state.items.map((item, index) => {
+		return &lt;Product
+			soldout={item.soldOutYn}  
+			name={item.itemNm} 
+			image={item.imgPath}
+			price={item.price}
+			link={item.lnkdUrl}
+			key={item.itemId} /&gt;
+		});
+	return items;
+  }
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Product 컴포넌트 업데이트 (props, html, css)</h2>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
+	import './Product.css';
+
+	function Product({ soldout, name, image, price, link }) {
+		return (
+			//...
+		)
+	}
+
+	Product.propTypes = {
+		soldout: PropTypes.string.isRequired,
+		name: PropTypes.string.isRequired,
+		image: PropTypes.string.isRequired,
+		price: PropTypes.string.isRequired,
+		link: PropTypes.string.isRequired
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
+	&lt;li&gt;
+		&lt;div className='cunit_prod'&gt;
+			&lt;div className="thmb"&gt;
+				&lt;a href={link}&gt;
+					&lt;ProductImage image={image} alt={name} /&gt;
+				&lt;/a&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div className="cunit_info"&gt;
+			&lt;div className="cunit_md"&gt;
+				&lt;div className="title"&gt;&lt;a href={link}&gt;{name}&lt;/a&gt;&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;div className="cunit_price"&gt;
+				&lt;div className="opt_price"&gt;
+					&lt;span className="blind"&gt;판매가&lt;/span&gt;
+					&lt;em className="ssg_price"&gt;{price}&lt;/em&gt; &lt;span className="ssg_tx"&gt;원&lt;/span&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/li&gt;
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>ProductImage 컴포넌트 alt 추가</h2>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
+	function ProductImage({image, alt}) {
+		return (
+			&lt;img src={image} alt={alt} title={alt} width="232" height="232" /&gt;
+		)
+	}
+
+	ProductImage.propTypes = {
+		image: PropTypes.string.isRequired,
+		alt: PropTypes.string.isRequired
+	}
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>CSS 품절 대응</h2>
+						<p>className={soldout === 'Y' ? 'cunit_prod cunit_soldout' : 'cunit_prod'}</p>
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
+	function Product({ soldout, name, image, price, link }) {
+		return (
+			&lt;li&gt;
+				&lt;div className={soldout === 'Y' ? 'cunit_prod cunit_soldout' : 'cunit_prod'}&gt;
+					&lt;div className="thmb"&gt;
+						&lt;a href={link}&gt;
+							&lt;ProductImage image={soldout === 'Y' ? 'http://img.ssgcdn.com/trans.ssg?src=/ui/ssg/img/common/img_ready_500x500.jpg&w=232&h=232' : image} alt={name} /&gt;
+						&lt;/a&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/li&gt;
+		)
+	} 
+						</code></pre>
+					</section>
+
+				</section>
+
+
+				<section>
+					<h1>감사합니다.</h1>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<script>
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+			Reveal.addEventListener( 'slidechanged', function(event) {
+				// event.previousSlide, event.currentSlide, event.indexh, event.indexv
+				var notes = event.currentSlide.querySelector(".notes");
+				if(notes) {
+					console.info(notes.innerHTML.replace(/\n\s+/g,'\n'));
+				}
+			});
+		</script>
+	</body>
+</html>
