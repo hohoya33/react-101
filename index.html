@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>React</title>
+		<title>React-101</title>
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
 		<meta name="author" content="Hakim El Hattab">
 		<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -48,7 +48,6 @@
 			<div class="slides">
 				<section>
 					<div><img src="img/react_logo.png " alt="" style="display:inline-block;margin:0;vertical-align:middle;width:18%;"><h1 style="display:inline-block;vertical-align:middle;margin:10px 0 0 -14px;font-size:60px;letter-spacing:normal">React 101</h1></div>
-					
 					<p>2017. 12. 28.</p>
 					<p>IT 개발2팀 UI파트 - 김재호</p>
 				</section>
@@ -79,7 +78,7 @@
 						<h2>React?</h2>
 						<ul>
 							<li>MVC(Model View Controller) 패턴에서 뷰(View) 부분을 컴포넌트로 만들기위한 UI라이브러리</li>
-							<li>Facebook 개발. 현재 Facebook, Instagram, Airbnb 등 여러 곳에서 사용</li>
+							<li>Facebook에서 개발. 현재 Facebook, Instagram, Airbnb 등 대규모 서비스에서도 사용되고 있는 견고한 라이브러리</li>
 						</ul>
 					</section>
 
@@ -105,7 +104,7 @@
 							<li>주석 { /* comments */ }</li>
 						</ul>
 						<pre><code class="react">
-	render() { 
+	render() {
 		let text = 'Hello';
 		let style = { color: 'red', backgroundColor: 'black' };
 		let loading = true;
@@ -119,13 +118,13 @@
 	}
 						</code></pre>
 					</section>
-					
+
 					<section>
 						<p>React v16부터 감싸주는 불필요한 태그 대신 Fragment 사용가능</p>
 						<pre><code class="react">
 	import React, { Component, Fragment } from 'react';
 
-	render() { 
+	render() {
 		return (
 			&lt;Fragment&gt;
 				&lt;div>Hello&lt;/div&gt;
@@ -139,16 +138,16 @@
 					<section>
 						<h2>컴포넌트 (Components)</h2>
 						<ul>
-							<li>UI 요소들을 그룹별로 나눠서 작업</li>
+							<li>UI요소들을 그룹별로 나눠서 작업</li>
 							<li>개발 생산성을 높이고 유지보수가 용이 (재사용성)</li>
-							<li>컴포넌트 네이밍 시, 첫 문자는 대문자로 CamelCase로 작성</li>
+							<li>컴포넌트 네이밍 시, 첫 문자는 대문자 CamelCase로 작성</li>
 						</ul>
 						<pre><code class="react">
 	import Header from './Header';
 	import Grid from './Grid';
 	import Footer from './Footer';
-	
-	render() { 
+
+	render() {
 		return (
 			&lt;div className="App"&gt;
 				&lt;Header /&gt;
@@ -162,12 +161,14 @@
 
 					<section>
 						<h2>Virtual DOM</h2>
-						<p>DOM 자체는 빠름. 그러나 브라우저에서 DOM의 변화가 일어나면 리페인트가 발생<br>이 과정에서 느려짐 (CSS를 다시 연산, 레이아웃 구성)</p>
-						<p>DOM 처리 횟수를 최소화, 효율적으로 진행</p>
+						<p>DOM 자체는 빠름. DOM의 문제점은 동적 UI에 최적화되어 있지 않음</p>
+						<p>브라우저에서 DOM의 변화(수정, 제거, 삽입) -> 리플로우 발생 (CSS 다시 연산, 레이아웃 새로 구성)</p>
+						<p>이 과정에서 DOM에 접근하는 만큼 반복 (속도저하)</p>
+						<p><strong>성능 개선을 위해 최소한의 DOM 처리</strong></p>
 						<ul>
 							<li>데이터 변경 시, 전체 UI를 Virtual DOM에 리렌더링</li>
-							<li>이전 Virtual DOM에 있던 내용과 현재의 내용을 비교</li>
-							<li>바뀐 부분만 실제 DOM에 적용</li>
+							<li>이전 Virtual DOM에 있던 내용과 현재의 내용비교</li>
+							<li>변경된 부분만 실제 DOM에 반영</li>
 						</ul>
 					</section>
 
@@ -196,7 +197,7 @@
 						<h2>설치</h2>
 						<ul>
 							<li><a href="https://nodejs.org/en/" target="_blank">NodeJS</a></li>
-							<li><a href="https://github.com/facebookincubator/create-react-app" target="_blank">create-react-app</a></li>
+							<li><a href="https://github.com/facebookincubator/create-react-app" target="_blank">create-react-app</a> - webpack, babel을 설치/구성하는 복잡한 빌드 과정 생략 가능</li>
 							<li><a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi" target="_blank">react-developer-tools (크롬 확장프로그램)</a></li>
 						</ul>
 						<pre><code class="bash">
@@ -206,9 +207,13 @@
 					<section>
 						<h2>프로젝트 생성</h2>
 						<pre><code class="bash">
+	$ create-react-app [프로젝트명]
+						</code></pre>
+
+						<pre><code class="bash">
 	$ create-react-app ssg-app
 	$ cd ssg-app
-	
+
 	$ npm start (프로젝트 서버 실행)
 	$ npm run build (파일 빌드)
 						</code></pre>
@@ -225,10 +230,10 @@
 					<section>
 						<h2>ReactDOM</h2>
 						<ul>
-							<li>ReactDOM은 React를 웹사이트에 출력(render)하는 걸 도와주는 모델</li>
-							<li>ReactDOM은 1개의 컴포넌트(App)를 출력</li>
+							<li>React를 웹사이트에 출력 하는것을 도와주는 모델</li>
+							<li>1개의 컴포넌트(App)를 출력</li>
 							<li>Element 아이디는 root, index.html 파일안에 있음</li>
-							<li>render를 하면 모든 컴포넌트들이 여기로 출력</li>
+							<li>render를 하면 모든 컴포넌트들이 root 안에 출력</li>
 						</ul>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;index.js</em><code class="react">
 	ReactDOM.render(&lt;App /&gt;, document.getElementById('root'));
@@ -236,39 +241,40 @@
 					</section>
 
 					<section>
-						<h3>상품 컴포넌트 만들기</h3>
+						<h3>컴포넌트 만들기</h3>
 						<ul>
+							<li>컴포넌트 정의 방법은 보통 ES6 class 문법 사용</li>
 							<li>일단 App.js처럼 동일하기 작성 (class Product..)</li>
-							<li>컴포넌트는 항상 render를 해야함</li>
+							<li>컴포넌트는 항상 render를 해야 함</li>
 							<li>export를 작성해서 해당 컴포넌트를 내 보냄</li>
 						</ul>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
 	import React, { Component } from 'react';
 
-	class Product extends Component { 
-		render() { 
+	class Product extends Component {
+		render() {
 			return (
 				&lt;div&gt;
 					&lt;h1&gt;상품명 상품명 상품명&lt;/h1&gt;
 				&lt;/div&gt;
 			);
 		}
-	} 
+	}
 	export default Product;
 						</code></pre>
 					</section>
 					<section>
 						<h2></h2>
 						<ul>
-							<li>App 컴포넌트 안에 Product 컴포넌트를 레고블럭 조립하듯이 사용</li>
-							<li>여러번 불러 올 수도 있음</li>
+							<li>App 컴포넌트에서 Product 컴포넌트를 레고블럭 조립하듯이 사용</li>
+							<li>여러 번 반복 사용 가능</li>
 						</ul>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
 	import React, { Component } from 'react';
 	import Product from './Product';
 
 	class App extends Component {
-		render() { 
+		render() {
 			return (
 				&lt;div className="App"&gt;
 					&lt;Product /&gt;
@@ -277,7 +283,7 @@
 				&lt;/div&gt;
 			);
 		}
-	} 
+	}
 	export default App;
 						</code></pre>
 					</section>
@@ -286,8 +292,8 @@
 						<h2>상품 이미지 넣기</h2>
 						<p>클래스명은 ProductImage render > return > 이미지 소스</p>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
-	class ProductImage extends Component { 
-		render() { 
+	class ProductImage extends Component {
+		render() {
 			return (
 				&lt;img src="http://item.ssgcdn.com/32/08/58/item/1000024580832_i1_500.jpg" /&gt;
 			);
@@ -299,11 +305,12 @@
 					<section>
 						<ul>
 							<li>Product 컴포넌트안에 상품명, 이미지..등 또 다른 작은 컴포넌트로 구성</li>
-							<li>큰 컴포넌트 안에 작은 컴포넌트를 집어넣는 방식으로 작업</li>
+							<li>큰 컴포넌트 안에 작은 컴포넌트를 넣는 방식으로 작업</li>
+							<li>컴포넌트를 사용하여 UI를 독립적이고 재사용 가능한 부분으로 분리</li>
 						</ul>
-						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">	
-	class Product extends Component { 
-		render() { 
+						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
+	class Product extends Component {
+		render() {
 			return (
 				&lt;div&gt;
 					&lt;ProductImage /&gt;
@@ -383,7 +390,7 @@
 	});
 	console.log(newArray); //[2, 4, 6, 8, 10]
 						</code></pre>
-						
+
 						<ul>
 							<li>이전에 만든 리스트는 효율적이지 않음, 계속 복사 붙여넣기 할 수 없음</li>
 							<li>상품데이터를 기반으로 map메소드를 사용해 리스트 제작</li>
@@ -501,7 +508,7 @@
 			super(props);
 			//1. 생성자 메소드, 컴포넌트가 처음 만들어 질 때 실행 (state 정의)
 		}
-		componentWillMount() { 
+		componentWillMount() {
 			//2. 컴포넌트가 DOM 위에 만들어지기 전에 실행
 		}
 		componentDidMount() {
@@ -516,7 +523,7 @@
 
 					</section>
 
-					
+
 					<section>
 						<h2>컴포넌트 업데이트</h2>
 						<p>componentWillReceiveProps() -> shouldComponetUpdate() -> componentWillUpdate() -> render() -> componentDidUpdate()</p>
@@ -528,13 +535,13 @@
 		shouldComponetUpdate() {
 			//2. prop, state가 변경 되었을 때, 업데이트 여부를 결정하기 위해 실행
 		}
-		componentWillUpdate() { 
+		componentWillUpdate() {
 			//3. 컴포넌트가 업데이트 되기 전에 실행
 		}
-		componentDidUpdate() { 
+		componentDidUpdate() {
 			//5. 컴포넌트가 업데이트를 마친 후 실행
 		}
-		render() { 
+		render() {
 			//4. 컴포넌트 렌더링
 		}
 	}
@@ -570,7 +577,7 @@
 					<section>
 						<h2>state 사용방법</h2>
 						<p>컴포넌트가 마운트되면 5초 후 greeting을 업데이트 하도록 코드작성</p>
-						
+
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
 	class App extends Component {
 		state = {
@@ -596,7 +603,7 @@
 							<li>setState를 사용해 갱신</li>
 							<li>setState가 호출 될 때마다 rende() 발생</li>
 						</ul>
-						
+
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
 		componentDidMount() {
 			setTimeout(() => {
@@ -753,7 +760,7 @@
 							<li>functional 컴포넌트들을 관리</li>
 							<li>ex) 사용자가 입력창에 타이핑을 할 때, 타이핑 하는 내용이 필요할 때</li>
 						</ul>
-	
+
 						<h3 style="margin-top:50px">함수형 컴포넌트 (dumb component)</h3>
 						<ul>
 							<li>오직 props로 전달받은 값을 DOM 렌더링만 해주는 역할</li>
@@ -798,7 +805,7 @@
 		image: PropTypes.string.isRequired
 	}
 						</code></pre>
-					</section>	
+					</section>
 				</section>
 
 
@@ -933,7 +940,7 @@
 			}, 3000);
 		});
 	}
-	
+
 	async function getItems() {
 		const itemValue = await callApi();
 		console.log(itemValue);
@@ -985,7 +992,7 @@
 						<p>콘솔로 데이터 확인 후 item 오브젝트 변경<br>상품명 itemNm, 이미지 imgPath<br>key는 index 대신 itemId 사용</p>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
     //before
-    &lt;Product name={item.name} image={item.image} key={index} /&gt; 
+    &lt;Product name={item.name} image={item.image} key={index} /&gt;
 
     //after
     &lt;Product name={item.itemNm} image={item.imgPath} key={item.itemId} /&gt;
@@ -1005,8 +1012,8 @@
   _renderItems = () => {
 	const items = this.state.items.map((item, index) => {
 		return &lt;Product
-			soldout={item.soldOutYn}  
-			name={item.itemNm} 
+			soldout={item.soldOutYn}
+			name={item.itemNm}
 			image={item.imgPath}
 			price={item.price}
 			link={item.lnkdUrl}
@@ -1095,7 +1102,7 @@
 				&lt;/div&gt;
 			&lt;/li&gt;
 		)
-	} 
+	}
 						</code></pre>
 					</section>
 
