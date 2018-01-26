@@ -184,6 +184,144 @@ class ProductImage extends Component {
 ```
 
 ## Props
+리액트 두가지 주요 컨셉 (props, state)<br>
+첫번째 props는 부모 컴포넌트로부터 전달받는 속성
 
+부모 컴포넌트(App)는 프로퍼티를 사용해 상품명, 이미지 정보를 자식 컴포넌트(Product)로 각각 전달
+```js
+//App.js
+const itemName = [
+  '[LG]LG전자 트롬 RH9SA, RH9WA 인버터 전기식 건조기 용량9KG',
+  '[일룸(iloom)]사랑받는 이유, 일룸이 제안하는 홈스타일링',
+  '[발뮤다]에어엔진(그레이/ 블랙 로그인시 추가쿠폰지원(일부상품제외)'
+];
+
+const itemImages = [
+  'http://item.ssgcdn.com/16/88/15/item/1000021158816_i1_202.jpg',
+  'http://item.ssgcdn.com/25/08/15/item/1000023150825_i1_202.jpg',
+  'http://item.ssgcdn.com/15/01/48/item/1000017480115_i1_202.jpg'
+];
+
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Product name={itemName[0]} image={itemImages[0]} />
+        <Product name={itemName[1]} image={itemImages[1]} />
+        <Product name={itemName[2]} image={itemImages[2]} />
+      </div>
+    );
+  }
+}
+```
+
+* 자식 컴포넌트(Product)에서 상품 정보들은 props를 통해 받음
+* JSX에서 각 요소들을 액세스하는 방법 { this.props.name }
+```js
+//Product.js
+class Product extends Component {
+    render() {
+        console.log(this.props);
+        return (
+            <div>
+                <ProductImage image={this.props.image} />
+                <h1>{this.props.name}</h1>
+            </div>
+        );
+    }
+}
+
+class ProductImage extends Component {
+    render() {
+        return (
+            <img src={this.props.image} />
+        );
+    }
+}
+```
 
 ## Lists with map
+map() 메소드는 파라미터로 전달 된 함수를 통하여 배열 내의 각 요소를 처리<br>그 결과로 새로운 배열 생성
+
+```js
+let arr = [1, 2, 3, 4, 5];
+let newArray = arr.map((currentValue, index, array) => {
+    return currentValue * 2;
+});
+
+console.log(newArray); //[2, 4, 6, 8, 10]
+```
+
+## 컴포넌트 데이터 매핑
+이전에 만든 리스트는 효율적이지 않음, 계속 복사 붙여넣기 할 수 없음<br>
+상품 데이터를 기반으로 map메소드를 사용해 Product 컴포넌트에 매핑
+
+기존 상품 데이터를(itemName, itemImages) 배열로 수정
+```js
+const items = [
+    {
+        name: '[LG]LG전자 트롬 RH9SA, RH9WA 인버터 전기식 건조기 용량9KG',
+        image: 'http://item.ssgcdn.com/16/88/15/item/1000021158816_i1_202.jpg'
+    },
+    {
+        name: '[일룸(iloom)]사랑받는 이유, 일룸이 제안하는 홈스타일링',
+        image: 'http://item.ssgcdn.com/25/08/15/item/1000023150825_i1_202.jpg'
+    },
+    {
+        name: '[발뮤다]에어엔진(그레이/ 블랙 로그인시 추가쿠폰지원(일부상품제외)',
+        image: 'http://item.ssgcdn.com/15/01/48/item/1000017480115_i1_202.jpg'
+    }
+];
+```
+
+이제 배열 하나를 잡고 매핑해서 리스트 제작
+```js
+//App.js
+class App extends Component {
+    render() {
+        return (
+            <div className="App">
+                {items.map(item => {
+                    return <Product name={item.name} image={item.image} />
+                })}
+            </div>
+        );
+    }
+}
+```
+
+## List Key
+DOM Tree간에 항목 삽입, 삭제, 대체 이동 여부를 파악하기 위해 빠르게 조회 할 수 있는 고유 식별자<br>
+각 리스트 아이템에 고유한 키 값을 넣어 실제 DOM과 가상 DOM을 비교, 빠른 방법으로 적절한 레코드를 업데이트
+```js
+//App.js
+<div className="App">
+    {items.map((item, index) => {
+        return <Product name={item.name} image={item.image} key={index} />
+    })}
+</div>
+```
+
+## Prop Types
+* 컴포넌트 props는 외부로부터 값을 지정받기 때문에 데이터 타입에 대한 검증 필요
+* propTypes객체는 props에 대한 유효성 검사 실행
+* prop-types 패키지 설치
+```bash
+$ npm install --save prop-types
+```
+* 이미지에 숫자나, true / false 같은 원치 않는 값이 들어 올 때 (에러발생)
+* isRequired 필수조건
+* string, number, isRequired..등 [propTypes 더보기](https://reactjs.org/docs/typechecking-with-proptypes.html)
+* props가 전달되는 컴포넌트는 모두 작성하는게 좋음
+```js
+//Product.js
+import PropTypes from 'prop-types';
+
+class Product extends Component {
+    static propTypes = {
+        name: PropTypes.string.isRequired, //name 속성은 반드시 필요
+        image: PropTypes.string
+    }
+    //...
+}	
+```

@@ -356,8 +356,7 @@
 					<section>
 						<ul>
 							<li>자식 컴포넌트(Product)에서 상품 정보들은 props를 통해 받음</li>
-							<li>JSX의 경우 명령을 실행시키려면 중괄호 { } 사용</li>
-							<li>각 요소들을 액세스하는 방법 { this.props.name }</li>
+							<li>JSX에서 각 요소들을 액세스하는 방법 { this.props.name }</li>
 						</ul>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
 	class Product extends Component {
@@ -381,24 +380,28 @@
 						<h2>Lists with map</h2>
 					</section>
 					<section>
-						<h2>JavaScript - map</h2>
-						<p>map() 메소드는 파라미터로 전달 된 함수를 통하여 배열 내의 각 요소를 처리해서<br>그 결과로 새로운 배열을 생성</p>
+						<h2>Javascript - map</h2>
+						<p>map() 메소드는 파라미터로 전달 된 함수를 통하여 배열 내의 각 요소를 처리<br>그 결과로 새로운 배열 생성</p>
 						<pre><code class="react">
-	let array = [1, 2, 3, 4, 5];
-	let newArray = array.map(function(currentValue, index, array){
-		return currentValue * 2;
+	let arr = [1, 2, 3, 4, 5];
+	let newArray = arr.map((currentValue, index, array) => {
+	    return currentValue * 2;
 	});
+
 	console.log(newArray); //[2, 4, 6, 8, 10]
 						</code></pre>
+					</section>
 
+					<section>
+						<h2>컴포넌트 데이터 매핑</h2>
 						<ul>
 							<li>이전에 만든 리스트는 효율적이지 않음, 계속 복사 붙여넣기 할 수 없음</li>
-							<li>상품데이터를 기반으로 map메소드를 사용해 리스트 제작</li>
+							<li>상품 데이터를 기반으로 map메소드를 사용해 Product 컴포넌트에 매핑</li>
 						</ul>
 					</section>
 
 					<section>
-						<p>상품 데이터(itemName, itemImages) 아래 배열로 수정</p>
+						<p>기존 상품 데이터를(itemName, itemImages) 배열로 수정</p>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
 	const items = [
 		{
@@ -418,7 +421,7 @@
 					</section>
 
 					<section>
-						<p>이제 배열 하나를 잡고 매핑(map)해서 리스트를 만듬</p>
+						<p>이제 배열 하나를 잡고 매핑해서 리스트 제작</p>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
 	class App extends Component {
 		render() {
@@ -435,8 +438,8 @@
 					</section>
 
 					<section>
-						<h2>list key</h2>
-						<p>각 리스트 아이템에 고유한 키값을 넣어 실제 DOM과 가상 DOM을 비교<br>빠른 방법으로 적적한 레코드를 업데이트</p>
+						<h2>List Key</h2>
+						<p>각 리스트 아이템에 고유한 키값을 넣어 실제 DOM과 가상 DOM을 비교<br>빠른 방법으로 적절한 레코드를 업데이트</p>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
 	&lt;div className="App"&gt;
 		{items.map((item, index) => {
@@ -455,10 +458,10 @@
 					</section>
 
 					<section>
-						<h2>React prop-types</h2>
+						<h2>prop-types</h2>
 						<ul>
-							<li>props은 외부로부터 값을 지정받기 때문에 데이터 타입이 무엇인지 검증 필요</li>
-							<li>propTypes은 props에 대한 유효성 검사 실행</li>
+							<li>컴포넌트 props는 외부로부터 값을 지정받기 때문에 데이터 타입에 대한 검증 필요</li>
+							<li>propTypes객체는 props에 대한 유효성 검사 실행</li>
 							<li>prop-types 패키지 설치</li>
 						</ul>
 
@@ -469,7 +472,7 @@
 
 					<section>
 						<ul>
-							<li>image에 숫자나, true / false 같은 원하지 않는 값이 들어올 때 (에러발생)</li>
+							<li>이미지에 숫자나, true / false 같은 원하지 않는 값이 들어올 때 (에러발생)</li>
 							<li>isRequired 필수조건, name 속성은 반드시 필요</li>
 							<li>string, number, isRequired..등 <a href="https://reactjs.org/docs/typechecking-with-proptypes.html" target="_blank">(propTypes 더보기)</a></li>
 							<li>props가 전달되는 컴포넌트는 다 작성하는게 좋음</li>
