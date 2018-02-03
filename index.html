@@ -164,7 +164,7 @@
 						<p>DOM 자체는 빠름. DOM의 문제점은 동적 UI에 최적화되어 있지 않음</p>
 						<p>브라우저에서 DOM의 변화(수정, 제거, 삽입) -> 리플로우 발생 (CSS 다시 연산, 레이아웃 새로 구성)</p>
 						<p>이 과정에서 DOM에 접근하는 만큼 반복 (속도저하)</p>
-						<p><strong>성능 개선을 위해 최소한의 DOM 처리</strong></p>
+						<p><strong>성능 개선을 위해 DOM 처리 횟수 최소화</strong></p>
 						<ul>
 							<li>데이터 변경 시, 전체 UI를 Virtual DOM에 리렌더링</li>
 							<li>이전 Virtual DOM에 있던 내용과 현재의 내용비교</li>
@@ -472,17 +472,17 @@
 
 					<section>
 						<ul>
-							<li>이미지에 숫자나, true / false 같은 원하지 않는 값이 들어올 때 (에러발생)</li>
-							<li>isRequired 필수조건, name 속성은 반드시 필요</li>
+							<li>이미지에 숫자나, true / false 같은 원하지 않는 값이 들어 올 때 (에러발생)</li>
+							<li>isRequired 필수조건</li>
 							<li>string, number, isRequired..등 <a href="https://reactjs.org/docs/typechecking-with-proptypes.html" target="_blank">(propTypes 더보기)</a></li>
-							<li>props가 전달되는 컴포넌트는 다 작성하는게 좋음</li>
+							<li>props가 전달되는 컴포넌트는 모두 작성하는게 좋음</li>
 						</ul>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
 	import PropTypes from 'prop-types';
 
 	class Product extends Component {
 		static propTypes = {
-			name: PropTypes.string.isRequired,
+			name: PropTypes.string.isRequired, //name 속성은 반드시 필요
 			image: PropTypes.string
 		}
 		//...
@@ -604,7 +604,7 @@
 						<ul>
 							<li>state를 직접 변경하면 안됨 (경고표시)</li>
 							<li>setState를 사용해 갱신</li>
-							<li>setState가 호출 될 때마다 rende() 발생</li>
+							<li>setState가 호출될 때마다 rende() 발생</li>
 						</ul>
 
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
@@ -621,7 +621,7 @@
 					</section>
 
 					<section>
-						<p>이제 컴포넌트 외부에 있는 상품 데이터(items)를 컴포넌트 state 안으로 옮겨보자!</p>
+						<p>컴포넌트 외부에 있는 상품 데이터(items)를 컴포넌트 안 state로 옮기자!</p>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
 	state = {
 		items: [
@@ -658,7 +658,7 @@
 					</section>
 
 					<section>
-						<p>상품 리스트에서 상품을 하나 더 추가 하고 싶으면?<br>이전 상품리스트를 그대로 두고 한 개의 상품을 추가</p>
+						<p>상품 리스트에서 상품을 하나 더 추가 하고 싶으면?<br>이전 상품 리스트를 그대로 두고 한 개의 상품을 추가</p>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
 	componentDidMount() {
 		setTimeout(() => {
@@ -720,13 +720,12 @@
 
 					<section>
 						<h2>Loading States</h2>
-						<p>에러: Cannot read property 'map' of undefined</p>
-						<p>this.state.items에 상품이 없으면 로딩을 출력</p>
+						<p>this.state.items에 상품이 없으면 로딩 후 상품리스트 출력</p>
 					</section>
 
 
 					<section>
-						<p>상품 리스트를 불러오는 새로운 함수(_renderItems)를 만들고 items 변수에 데이터를 저장</p>
+						<p>상품 리스트를 불러오는 새로운 함수(_renderItems)를 만들고 변수 items에 데이터 저장</p>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
 	_renderItems = () => {
 		const items = this.state.items.map((item, index) => {
@@ -757,24 +756,24 @@
 					</section>
 
 					<section>
-						<h3>클래스기반 컴포넌트 (smart component)</h3>
+						<h3>클래스기반 컴포넌트 (class component)</h3>
 						<ul>
-							<li>state, 라이프사이클 개념을 사용할 때</li>
-							<li>functional 컴포넌트들을 관리</li>
-							<li>ex) 사용자가 입력창에 타이핑을 할 때, 타이핑 하는 내용이 필요할 때</li>
+							<li>state, 라이프사이클 개념을 사용 할 때</li>
+							<li>ex) 사용자가 입력창에 타이핑 시, 타이핑 하는 내용이 필요 할 때</li>
 						</ul>
 
-						<h3 style="margin-top:50px">함수형 컴포넌트 (dumb component)</h3>
+						<h3 style="margin-top:50px">함수형 컴포넌트 (functional component)</h3>
 						<ul>
-							<li>오직 props로 전달받은 값을 DOM 렌더링만 해주는 역할</li>
+							<li>props로 전달받은 값을 DOM 렌더링만 해주는 역할</li>
 							<li>state, 라이프사이클를 갖고 있지 않음</li>
+							<li>코드가 가볍고 빠르고 쉬움</li>
 						</ul>
 					</section>
 
 
 					<section>
-						<h2>ProductImage 컴포넌트</h2>
-						<p>state가 없고 props밖에 없을 때 class 컴포넌트 대신 functional 컴포넌트로 변경<br>functional 컴포넌트에서는 this.props를 삭제, 이전 보다 적은 양의 코드로 작성</p>
+						<h2>함수형 컴포넌트로 변경</h2>
+						<p>state가 없고 props만 존재 시, class 컴포넌트 대신 functional 컴포넌트로 변경 가능</p>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
 	//es6 비구조화 할당(destructuring assignment) 구문
 	//const image = props.image; 이렇게 쓰는것과 같은 방식
@@ -792,7 +791,6 @@
 					</section>
 
 					<section>
-						<h2>Product 컴포넌트</h2>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
 	function Product({name, image}) {
 		return (
@@ -818,18 +816,21 @@
 					</section>
 
 					<section>
-						<h2>React에서 Ajax 요청</h2>
-						<p>이전에 작업한 setTimeout을 삭제하고 대신에 ajax로 상품 데이터를 받아서 처리</p>
+						<h2>React에서 비동기 통신</h2>
+						<p>이전에 작업한 setTimeout을 삭제하고 대신에 AJAX로 상품 데이터를 받아서 처리</p>
 
 						<ul>
-							<li>ajax 작업 시, 많은 개발자들이 jQuery 사용. 이제 더 이상 jQuery는 필요없음</li>
-							<li>ajax 기능만 필요 (fetch, axios..)</li>
+							<li>기존 AJAX 처리 시 jQuery 사용. 이제 더 이상 jQuery는 필요 없음</li>
+							<li>AJAX 기능만 필요 (fetch, axios..)</li>
 						</ul>
 					</section>
 
 					<section>
-						<h2>fetch</h2>
-						<p>fetch는 모던 웹브라우저에 내장되어있는 기능</p>
+						<h2>fetch API</h2>
+						<ul>
+							<li>기존 XMLHttpRequest(XHR) API는 복잡하고 가독성이 떨어짐</li>
+							<li>fetch()함수는 모던 웹브라우저에 내장 되어있는 기능, 비동기 통신을 간결하게 표현</li>
+						</ul>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
 	componentDidMount() {
 		const url = 'https://event.ssg.com/event/getLeafItemIdsItemList.ssg?itemIds=1000021158816,1000023150825,1000017480115,1000024135227,2097000201672,1000022797673';
@@ -846,8 +847,8 @@
 
 					<section>
 						<h2>fetch-jsonp 설치</h2>
-						<h3>jsonp란?</h3>
-						<p>웹 브라우져에서는 same-origin policy(SOP) 정책에 따라 다른 도메인간의 request을 제한<br>그러나 &lt;script/&gt; 태그는 SOP정책에 속하지 않는다는 사실을 근거로<br>서로 다른 도메인간의 javascript 호출을 위하여 jsonp 사용</p>
+						<h3>jsonp</h3>
+						<p>웹 브라우져에서는 same-origin policy(SOP) 정책에 따라 다른 도메인간의 request을 제한<br>그러나 &lt;script/&gt; 태그는 SOP정책에 속하지 않는다는 사실을 근거로<br>서로 다른 도메인간 javascript 호출을 위해 jsonp 사용</p>
 
 						<pre><code class="bash">
 	$ npm install fetch-jsonp --save
@@ -888,11 +889,11 @@
 							<li>동기: 명령을 순서대로 차례차례 끝내고 넘어감</li>
 							<li>비동기: 특정 명령이 실행된 후 그 명령이 끝나기 전에 다음 명령이 실행</li>
 						</ul>
-						<p>서버에 request 요청 후 response를 받는 속도는 명령 실행 속도보다는 훨씬 느림<br>이걸 원래 순서대로 코딩하게 되면 문제 발생<br>따라서 동기적으로 동작하길 원한다면 callback을 잘 이용</p>
+						<p>서버에 request 요청 후, response 받는 속도는 명령 실행 속도보다 훨씬 느림<br>이것을 원래 순서대로 코딩하게 되면 에러 발생<br>따라서 동기적으로 실행되길 원한다면 callback 함수를 잘 이용</p>
 					</section>
 
 					<section>
-						<h2>callback hell</h2>
+						<h2>Callback Hell</h2>
 						<p>한 곳에 코드를 몰아서 작성하는 것보다 작은 함수로 기능을 나누는 것이 좋음</p>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;App.js</em><code class="react">
 	componentDidMount() {
@@ -985,7 +986,6 @@
 		this.setState({
 			items //items: items (es6)
 		});
-		//그리고 state.items을 받은 데이터 items로 세팅
 	}
 						</code></pre>
 					</section>
@@ -1005,7 +1005,7 @@
 
 				<section>
 					<section>
-						<h2>Update Items Component</h2>
+						<h2>Update Item Component</h2>
 					</section>
 
 					<section>
@@ -1090,7 +1090,7 @@
 					</section>
 
 					<section>
-						<h2>CSS 품절 대응</h2>
+						<h2>품절 대응 (css class)</h2>
 						<p>className={soldout === 'Y' ? 'cunit_prod cunit_soldout' : 'cunit_prod'}</p>
 						<pre><em class="file_name"><i class="devicons devicons-javascript"></i>&nbsp;Product.js</em><code class="react">
 	function Product({ soldout, name, image, price, link }) {
